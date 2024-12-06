@@ -1,57 +1,64 @@
-import java.util.*;
+import java.util.ArrayList;
+
 class Solution {
-    public static int[] spiralMatrix(int[][] mat) {
-        int n = 0, s = mat.length, e = 0, w = mat[0].length;
-        int[] res = new int[s * w];
-        int index = 0;
+    ArrayList<ArrayList<Integer>> zeroMatrix(ArrayList<ArrayList<Integer>> matrix, Integer n, Integer m){
+        boolean[] rowsWithZero = new boolean[n];
+        boolean[] colsWithZero = new boolean[m];
 
-        while (n < s && e < w) {
-            
-            for (int i = e; i < w; i++) {
-                res[index] = mat[n][i];
-                index++;
-            }
-            n++; 
-
-            
-            for (int i = n; i < s; i++) {
-                res[index] = mat[i][w - 1];
-                index++;
-            }
-            w--; 
-
-            
-            if (n < s) { 
-                for (int i = w - 1; i >= e; i--) {
-                    res[index] = mat[s - 1][i];
-                    index++;
+        for(int i = 0; i < n; i++){
+            for (int j = 0; j < m; j++) {
+                if(matrix.get(i).get(j)==0){
+                    rowsWithZero[i] = true;
+                    colsWithZero[j] = true;
                 }
-                s--; 
-            }
-
-            
-            if (e < w) { 
-                for (int i = s - 1; i >= n; i--) {
-                    res[index] = mat[i][e];
-                    index++;
-                }
-                e++; 
             }
         }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if(colsWithZero[j] || rowsWithZero[i]){
+                    matrix.get(i).set(j, 0);
+                }
+            }
+        }
+        
 
-        return res;
+        return matrix;
+
     }
+
 }
 
-public class Demitasse{
-    public static void main(String args[]){
-        int[][] matrix = 
-        {{1,2,3,4},
-        {1,2,3,4},
-        {1,2,3,4}};
-        int[] result = Solution.spiralMatrix(matrix);
-        int[] res = Arrays.copyOfRange(result, 0, matrix.length * matrix[0].length);
-        System.out.println(Arrays.toString(res));
-        
+public class Demitasse {
+    public static void main(String args[]) {
+        ArrayList<ArrayList<Integer>> arr = new ArrayList<>();
+        ArrayList<Integer> a1 = new ArrayList<>();
+        a1.add(1);
+        a1.add(2);
+        a1.add(3);
+        ArrayList<Integer> a2 = new ArrayList<>();
+        a2.add(0);
+        a2.add(1);
+        a2.add(7);
+        // a2.add(0);
+
+        arr.add(a1);
+        arr.add(a2);
+
+        for (int i = 0; i < arr.size(); i++) {
+            for (int j = 0; j < arr.get(i).size(); j++) {
+                System.out.print(arr.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+
+        Solution x = new Solution();
+        ArrayList<ArrayList<Integer>> sol = x.zeroMatrix(arr, 2, 3);
+        ;
+        for (int i = 0; i < sol.size(); i++) {
+            for (int j = 0; j < sol.get(i).size(); j++) {
+                System.out.print(sol.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
     }
 }
